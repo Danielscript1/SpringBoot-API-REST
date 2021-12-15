@@ -32,7 +32,7 @@ public class TopicoDto {
 	public LocalDateTime getDataCriacao() {
 		return dataCriacao;
 	}
-	//metodo que convete utilazando a stream do java 8
+	//metodo que convete utilizando a stream do java 8
 	public static List<TopicoDto> converter(List<Topico> topicos) {
 		//realizar uma convecao de topicos para topicos dto
 		return topicos.stream().map(TopicoDto::new).collect(Collectors.toList()) ;
