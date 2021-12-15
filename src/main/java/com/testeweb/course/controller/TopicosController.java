@@ -3,6 +3,7 @@ package com.testeweb.course.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,13 +11,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.testeweb.course.controller.dto.TopicoDto;
 import com.testeweb.course.model.Curso;
 import com.testeweb.course.model.Topico;
+import com.testeweb.course.repository.TopicosRepository;
 
 @RestController
 public class TopicosController {
+	@Autowired
+	private TopicosRepository topicosRepository;
+	
 	@RequestMapping("/topicos")
 	public List<TopicoDto> lista(){
-		Topico topico = new Topico("duvida", "spring",new Curso("java","programacao"));
-		//conveter minha lista para dto 
-		return TopicoDto.converter(Arrays.asList(topico));
+		List<Topico> topicos = topicosRepository.findAll();
+		return TopicoDto.converter(topicos);
 	}
 }
