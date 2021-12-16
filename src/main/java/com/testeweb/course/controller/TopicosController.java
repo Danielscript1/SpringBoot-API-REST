@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.testeweb.course.controller.dto.DetalhesDoTopicoDto;
 import com.testeweb.course.controller.dto.TopicoDto;
 import com.testeweb.course.controller.form.TopicoForm;
 import com.testeweb.course.model.Topico;
@@ -50,9 +51,9 @@ public class TopicosController {
 	}
 	//buscandoResultadosPeloId
 	@GetMapping("/{id}")
-	public TopicoDto detalhar(@PathVariable Long id) {
+	public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {
 		Topico topico = topicoRepository.getById(id);
-		return new TopicoDto(topico);
+		return new DetalhesDoTopicoDto(topico);
 	}
 	
 }
