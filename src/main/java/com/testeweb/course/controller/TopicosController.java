@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,7 @@ public class TopicosController {
 		}
 	}
 	@PostMapping
-	public ResponseEntity<TopicoDto> cadastrar(@RequestBody TopicoForm form , UriComponentsBuilder uriBuilder){
+	public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Validated TopicoForm form , UriComponentsBuilder uriBuilder){
 		//converter recebendo um form e convetendo para o topico dto
 		Topico topico = form.converter(cursoRepository);
 		topicoRepository.save(topico);
