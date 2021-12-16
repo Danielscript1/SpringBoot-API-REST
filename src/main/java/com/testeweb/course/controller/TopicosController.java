@@ -2,6 +2,7 @@ package com.testeweb.course.controller;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import com.testeweb.course.controller.form.TopicoForm;
 import com.testeweb.course.model.Topico;
 import com.testeweb.course.repository.CursoRepository;
 import com.testeweb.course.repository.TopicosRepository;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/topicos")
@@ -58,9 +60,14 @@ public class TopicosController {
 	//buscandoResultadosPeloId
 	@GetMapping("/{id}")
 	@Transactional
-	public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {
-		Topico topico = topicoRepository.getById(id);
-		return new DetalhesDoTopicoDto(topico);
+	public ResponseEntity<DetalhesDoTopicoDto> detalhar(@PathVariable Long id) {
+		Optional<Topico> topico = topicoRepository.findById(id);
+		if(topico.isPresent()) {
+		return ResponseEntity.ok( new DetalhesDoTopicoDto(topico.get()));
+		}else {
+			return ResponseEntity.notFound().build();
+		}
+		
 	}
 	//atualizando o topico
 	@PutMapping("/{id}")
