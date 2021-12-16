@@ -5,10 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.testeweb.course.controller.dto.DetalhesDoTopicoDto;
 import com.testeweb.course.controller.dto.TopicoDto;
+import com.testeweb.course.controller.form.AtualizacaoTopicoForm;
 import com.testeweb.course.controller.form.TopicoForm;
 import com.testeweb.course.model.Topico;
 import com.testeweb.course.repository.CursoRepository;
@@ -54,6 +57,15 @@ public class TopicosController {
 	public DetalhesDoTopicoDto detalhar(@PathVariable Long id) {
 		Topico topico = topicoRepository.getById(id);
 		return new DetalhesDoTopicoDto(topico);
+	}
+	//atualizando o topico
+	@PutMapping("/{id}")
+	@Transactional
+	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Validated AtualizacaoTopicoForm form){
+		
+		Topico topico = form.atualizar(id,topicoRepository);
+	    return ResponseEntity.ok(new TopicoDto(topico));
+	    
 	}
 	
 }
